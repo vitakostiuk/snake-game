@@ -44,6 +44,13 @@ function App() {
     }
   }, [snake, food, gameOver, foodId]);
 
+  function handleSetDelay() {
+    if (score % 50 === 0) {
+      setDelay((prevDelay) => prevDelay - 50);
+      console.log("delay", delay);
+    }
+  }
+
   function handleSetScore() {
     if (score > Number(localStorage.getItem("snakeScore"))) {
       localStorage.setItem("snakeScore", JSON.stringify(score));
@@ -96,14 +103,19 @@ function App() {
       switch (foodId) {
         case "citrus":
           setScore(score + 1);
+          if (score % 50 === 0) {
+            handleSetDelay();
+          }
           break;
 
         case "pineapple":
           setScore(score + 5);
+          handleSetDelay();
           break;
 
         case "watermelon":
           setScore(score + 10);
+          handleSetDelay();
           break;
 
         default:
