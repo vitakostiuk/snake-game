@@ -43,10 +43,11 @@
   color: white;
   font-size: 35px;
 }
+
 .playButton {
   position: fixed;
   top: 92%;
-  left: 50%;
+  left: 46%;
   transform: translate(-50%, -50%);
   color: white;
   background: #502c7b;
@@ -59,6 +60,12 @@
   font-weight: 700;
   letter-spacing: 5px;
   text-transform: uppercase;
+}
+
+.pauseButton {
+  composes: playButton;
+  left: 55%;
+  background: #077e2e;
 }
 
 .scoreBox {

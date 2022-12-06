@@ -14,7 +14,7 @@ const initialSnake = [
 ];
 const initialFood = [14, 10];
 const scale = 32;
-const timeDelay = 100;
+const timeDelay = 300;
 
 function App() {
   const canvasRef = useRef(null);
@@ -51,12 +51,29 @@ function App() {
   }
 
   function play() {
-    setSnake(initialSnake);
-    setFood(initialFood);
-    setDirection([1, 0]);
     setDelay(timeDelay);
-    setScore(0);
     setGameOver(false);
+
+    switch (localStorage.getItem("direction")) {
+      case "ArrowLeft":
+        setDirection([-1, 0]);
+        break;
+      case "ArrowUp":
+        setDirection([0, -1]);
+        break;
+      case "ArrowRight":
+        setDirection([1, 0]);
+        break;
+      case "ArrowDown":
+        setDirection([0, 1]);
+        break;
+      default:
+        break;
+    }
+  }
+
+  function pause() {
+    setDelay(null);
   }
 
   function checkCollision(head) {
@@ -126,15 +143,19 @@ function App() {
     switch (e.key) {
       case "ArrowLeft":
         setDirection([-1, 0]);
+        localStorage.setItem("direction", "ArrowLeft");
         break;
       case "ArrowUp":
         setDirection([0, -1]);
+        localStorage.setItem("direction", "ArrowUp");
         break;
       case "ArrowRight":
         setDirection([1, 0]);
+        localStorage.setItem("direction", "ArrowRight");
         break;
       case "ArrowDown":
         setDirection([0, 1]);
+        localStorage.setItem("direction", "ArrowDown");
         break;
     }
   }
@@ -179,6 +200,9 @@ function App() {
       {gameOver && <div className={styles.gameOver}>Game Over</div>}
       <button onClick={play} className={styles.playButton}>
         Play
+      </button>
+      <button onClick={pause} className={styles.pauseButton}>
+        Pause
       </button>
       <div className={styles.scoreBox}>
         <h2>Score: {score}</h2>
