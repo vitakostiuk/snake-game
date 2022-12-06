@@ -45,7 +45,7 @@
 }
 .playButton {
   position: fixed;
-  top: 80%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;

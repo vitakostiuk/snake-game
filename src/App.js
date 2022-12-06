@@ -8,7 +8,7 @@ const canvasX = 400;
 const canvasY = 400;
 const initialSnake = [
   [4, 10],
-  [4, 10],
+  // [4, 10],
 ];
 const initialApple = [14, 10];
 const scale = 16;
@@ -16,6 +16,7 @@ const timeDelay = 100;
 
 function App() {
   const canvasRef = useRef(null);
+
   const [snake, setSnake] = useState(initialSnake);
   const [apple, setApple] = useState(initialApple);
   const [direction, setDirection] = useState([0, -1]);
@@ -60,13 +61,17 @@ function App() {
       if (head[i] < 0 || head[i] * scale >= canvasX) return true;
     }
     for (const s of snake) {
+      // console.log("head", head);
+      // console.log("s", s);
       if (head[0] === s[0] && head[1] === s[1]) return true;
     }
     return false;
   }
 
   function appleAte(newSnake) {
-    let coord = apple.map(() => Math.floor((Math.random() * canvasX) / scale));
+    const coord = apple.map(() =>
+      Math.floor((Math.random() * canvasX) / scale)
+    );
     if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
       let newApple = coord;
       setScore(score + 1);
@@ -78,11 +83,16 @@ function App() {
 
   function runGame() {
     const newSnake = [...snake];
+    // console.log("newSnake", newSnake);
+
     const newSnakeHead = [
       newSnake[0][0] + direction[0],
       newSnake[0][1] + direction[1],
     ];
+    // console.log("newSnakeHead", newSnakeHead);
+
     newSnake.unshift(newSnakeHead);
+
     if (checkCollision(newSnakeHead)) {
       setDelay(null);
       setGameOver(true);
@@ -113,7 +123,7 @@ function App() {
   }
 
   return (
-    <div onKeyDown={(e) => changeDirection(e)}>
+    <div onKeyDown={changeDirection}>
       <img id="fruit" src={AppleLogo} alt="fruit" width="30" />
       <img src={GameField} alt="fruit" className={styles.field} />
       <canvas
