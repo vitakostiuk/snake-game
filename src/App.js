@@ -75,7 +75,23 @@ function App() {
     const coord = food.map(() => Math.floor((Math.random() * canvasX) / scale));
     if (newSnake[0][0] === food[0] && newSnake[0][1] === food[1]) {
       let newApple = coord;
-      setScore(score + 1);
+
+      switch (foodId) {
+        case "citrus":
+          setScore(score + 1);
+          break;
+
+        case "pineapple":
+          setScore(score + 5);
+          break;
+
+        case "watermelon":
+          setScore(score + 10);
+          break;
+
+        default:
+          break;
+      }
       setFood(newApple);
       return true;
     }
