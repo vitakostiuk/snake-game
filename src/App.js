@@ -1,24 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./App.module.css";
-import AppleLogo from "./images/applePixels.png";
+import Citrus from "./images/citrus_icon.png";
+import Pineapple from "./images/pineapple_icon.png";
+import Watermelon from "./images/watermelon_icon.png";
 import GameField from "./images/field.png";
 import useInterval from "./helpers/useInterval";
 
-const canvasX = 400;
-const canvasY = 400;
+const canvasX = 800;
+const canvasY = 800;
 const initialSnake = [
   [4, 10],
-  // [4, 10],
+  [4, 10],
 ];
-const initialApple = [14, 10];
-const scale = 16;
+const initialFood = [14, 10];
+const scale = 32;
 const timeDelay = 100;
 
 function App() {
   const canvasRef = useRef(null);
 
   const [snake, setSnake] = useState(initialSnake);
-  const [apple, setApple] = useState(initialApple);
+  const [food, setFood] = useState(initialFood);
+  const [foodId, setFoodId] = useState("watermelon");
   const [direction, setDirection] = useState([0, -1]);
   const [delay, setDelay] = useState(null);
   const [gameOver, setGameOver] = useState(false);
@@ -27,7 +30,7 @@ function App() {
   useInterval(() => runGame(), delay);
 
   useEffect(() => {
-    let fruit = document.getElementById("fruit");
+    let fruit = document.getElementById(foodId);
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -36,10 +39,10 @@ function App() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.fillStyle = "#a3d001";
         snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
-        ctx.drawImage(fruit, apple[0], apple[1], 1, 1);
+        ctx.drawImage(fruit, food[0], food[1], 1, 1);
       }
     }
-  }, [snake, apple, gameOver]);
+  }, [snake, food, gameOver, foodId]);
 
   function handleSetScore() {
     if (score > Number(localStorage.getItem("snakeScore"))) {
@@ -49,7 +52,7 @@ function App() {
 
   function play() {
     setSnake(initialSnake);
-    setApple(initialApple);
+    setFood(initialFood);
     setDirection([1, 0]);
     setDelay(timeDelay);
     setScore(0);
@@ -69,13 +72,11 @@ function App() {
   }
 
   function appleAte(newSnake) {
-    const coord = apple.map(() =>
-      Math.floor((Math.random() * canvasX) / scale)
-    );
-    if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
+    const coord = food.map(() => Math.floor((Math.random() * canvasX) / scale));
+    if (newSnake[0][0] === food[0] && newSnake[0][1] === food[1]) {
       let newApple = coord;
       setScore(score + 1);
-      setApple(newApple);
+      setFood(newApple);
       return true;
     }
     return false;
@@ -124,8 +125,35 @@ function App() {
 
   return (
     <div onKeyDown={changeDirection}>
-      <img id="fruit" src={AppleLogo} alt="fruit" width="30" />
-      <img src={GameField} alt="fruit" className={styles.field} />
+      <img
+        id="citrus"
+        src={Citrus}
+        alt="citrus"
+        width="32"
+        onClick={() => setFoodId("citrus")}
+      />
+      <img
+        id="pineapple"
+        src={Pineapple}
+        alt="pineapple"
+        width="32"
+        onClick={() => setFoodId("pineapple")}
+      />
+      <img
+        id="watermelon"
+        src={Watermelon}
+        alt="watermelon"
+        width="32"
+        onClick={() => setFoodId("watermelon")}
+      />
+
+      <img
+        src={GameField}
+        alt="Game Field"
+        className={styles.field}
+        width="800"
+        height="800"
+      />
       <canvas
         className={styles.playArea}
         ref={canvasRef}

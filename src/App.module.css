@@ -1,8 +1,8 @@
 .playArea {
   border: 5px solid transparent;
   /* background-color: #16161844; */
-  width: 400px;
-  height: 400px;
+  width: 800px;
+  height: 800px;
   /* width: 420px;
   height: 420px; */
   position: fixed;
