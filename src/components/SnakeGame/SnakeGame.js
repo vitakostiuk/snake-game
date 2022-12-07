@@ -7,16 +7,18 @@ import Pineapple from "../../images/pineapple_icon.png";
 import Watermelon from "../../images/watermelon_icon.png";
 import GameField from "../../images/field.png";
 import useInterval from "../../helpers/useInterval";
+import Score from "../Score";
 import styles from "./SnakeGame.module.css";
+import LeaderBoard from "../LeaderBoard";
 
-const canvasX = 800;
-const canvasY = 800;
+const canvasX = 600;
+const canvasY = 600;
 const initialSnake = [
   [4, 10],
   [4, 10],
 ];
 const initialFood = [14, 10];
-const scale = 32;
+const scale = 24;
 const timeDelay = 300;
 
 const SnakeGame = () => {
@@ -223,34 +225,47 @@ const SnakeGame = () => {
 
   return (
     <div onKeyDown={changeDirection}>
-      <img
-        id="citrus"
-        src={Citrus}
-        alt="citrus"
-        width="32"
-        onClick={() => setFoodId("citrus")}
-      />
-      <img
-        id="pineapple"
-        src={Pineapple}
-        alt="pineapple"
-        width="32"
-        onClick={() => setFoodId("pineapple")}
-      />
-      <img
-        id="watermelon"
-        src={Watermelon}
-        alt="watermelon"
-        width="32"
-        onClick={() => setFoodId("watermelon")}
-      />
+      <div className={styles.container}>
+        <div className={styles.iconContainer}>
+          <img
+            id="citrus"
+            src={Citrus}
+            alt="citrus"
+            className={styles.food}
+            onClick={() => setFoodId("citrus")}
+          />
+          <img
+            id="pineapple"
+            src={Pineapple}
+            alt="pineapple"
+            className={styles.food}
+            onClick={() => setFoodId("pineapple")}
+          />
+          <img
+            id="watermelon"
+            src={Watermelon}
+            alt="watermelon"
+            className={styles.food}
+            onClick={() => setFoodId("watermelon")}
+          />
+        </div>
+
+        <div className={styles.btnContainer}>
+          <button onClick={play} className={styles.playButton}>
+            Play
+          </button>
+          <button onClick={pause} className={styles.pauseButton}>
+            Pause
+          </button>
+        </div>
+      </div>
 
       <img
         src={GameField}
         alt="Game Field"
         className={styles.field}
-        width="800"
-        height="800"
+        width="600"
+        height="600"
       />
       <canvas
         className={styles.playArea}
@@ -270,22 +285,10 @@ const SnakeGame = () => {
           </button>
         </div>
       )}
-      <button onClick={play} className={styles.playButton}>
-        Play
-      </button>
-      <button onClick={pause} className={styles.pauseButton}>
-        Pause
-      </button>
-      <div className={styles.scoreBox}>
-        <h2>Score: {score}</h2>
-        <h2>
-          High Score:{" "}
-          {`${
-            score > Math.max(...scoreFromRedux)
-              ? score
-              : Math.max(...scoreFromRedux)
-          }`}
-        </h2>
+
+      <div className={styles.scoreContainer}>
+        <Score score={score} scoreFromRedux={scoreFromRedux} />
+        <LeaderBoard />
       </div>
     </div>
   );

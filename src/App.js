@@ -4,25 +4,29 @@ import { useSelector } from "react-redux";
 import { authSelectors } from "./redux/auth";
 import SnakeGame from "./components/SnakeGame";
 import SignUp from "./components/SignUp";
+import LeaderBoard from "./components/LeaderBoard";
+import Score from "./components/Score";
 
 const App = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
   return (
-    <Routes>
-      {/* AUTH */}
-      <Route
-        path="/home"
-        element={!isLoggedIn ? <Navigate to="/" replace /> : <SnakeGame />}
-      ></Route>
+    <>
+      <Routes>
+        {/* AUTH */}
+        <Route
+          path="/home"
+          element={!isLoggedIn ? <Navigate to="/" replace /> : <SnakeGame />}
+        ></Route>
 
-      {/* NOT AUTH */}
-      <Route
-        path="/"
-        element={isLoggedIn ? <Navigate to="/home" replace /> : <SignUp />}
-      ></Route>
+        {/* NOT AUTH */}
+        <Route
+          path="/"
+          element={isLoggedIn ? <Navigate to="/home" replace /> : <SignUp />}
+        ></Route>
 
-      <Route path="*" element={<SnakeGame />}></Route>
-    </Routes>
+        <Route path="*" element={<SnakeGame />}></Route>
+      </Routes>
+    </>
   );
 };
 
