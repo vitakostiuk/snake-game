@@ -1,0 +1,63 @@
+.ContactForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.InputWrapper {
+  display: block;
+  margin: 0 auto;
+}
+
+.Label {
+  display: block;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.Input {
+  display: block;
+  width: 400px;
+  height: 25px;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #a1a1a1;
+  box-shadow: 0px 1px 3px -1px rgba(0, 0, 0, 0.75);
+  outline: none;
+  font-size: 15px;
+}
+
+.FormBtn {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0px 1px 3px -1px rgba(0, 0, 0, 0.75);
+  font-size: 15px;
+}
+
+.FormBtn:hover {
+  background-color: #1ea34a;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.CloseBtn {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+  background-color: #fff;
+  cursor: pointer;
+  border: none;
+  fill: #1a1a1a;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}

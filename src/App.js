@@ -1,5 +1,6 @@
 import React from "react";
 import SnakeGame from "./components/SnakeGame";
+import SignUp from "./components/SignUp";
 
 const App = () => {
   return <SnakeGame />;
