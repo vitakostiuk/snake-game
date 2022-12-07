@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { authSelectors } from "../../redux/auth";
 import Citrus from "../../images/citrus_icon.png";
 import Pineapple from "../../images/pineapple_icon.png";
 import Watermelon from "../../images/watermelon_icon.png";
@@ -29,11 +31,12 @@ const SnakeGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
+  const token = useSelector(authSelectors.getToken);
+
   useInterval(() => runGame(), delay);
 
   // axios.defaults.baseURL = "https://snake-game-backend.onrender.com";
-  axios.defaults.headers.common.Authorization =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTA2YmM0YmJkMDdlZTlhNDQ3MDdiOSIsImlhdCI6MTY3MDQwOTE1NiwiZXhwIjoxNjcwNDk1NTU2fQ.0vobgE1vJIFYUTxR5dZFh_DXXQKStbsSkgkK4ZUEGAc";
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   useEffect(() => {
     const getAllScores = async () => {
