@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllScores } from "../../redux/score/scoreOperations";
 import { authSelectors } from "../../redux/auth";
 import Citrus from "../../images/citrus_icon.png";
 import Pineapple from "../../images/pineapple_icon.png";
@@ -31,26 +32,30 @@ const SnakeGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
-  const token = useSelector(authSelectors.getToken);
+  // const token = useSelector(authSelectors.getToken);
+  // console.log("token", token);
+  const dispatch = useDispatch();
 
   useInterval(() => runGame(), delay);
 
   // axios.defaults.baseURL = "https://snake-game-backend.onrender.com";
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   useEffect(() => {
-    const getAllScores = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://snake-game-backend.onrender.com/api/scores"
-        );
-        console.log("data", data);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    getAllScores();
-  }, []);
+    const data = dispatch(getAllScores());
+    console.log("data", data);
+    // const getAllScores = async () => {
+    //   try {
+    //     const { data } = await axios.get(
+    //       "https://snake-game-backend.onrender.com/api/scores"
+    //     );
+    //     console.log("data", data);
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // };
+    // getAllScores();
+  }, [dispatch]);
 
   useEffect(() => {
     let fruit = document.getElementById(foodId);

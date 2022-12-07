@@ -11,7 +11,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from "./auth/authSlice";
+import authSlice from "./auth/authSlice";
+import scoreSlice from "./score/scoreSlice";
 import logger from "redux-logger";
 
 const persistAuthConfig = {
@@ -21,7 +22,8 @@ const persistAuthConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: persistReducer(persistAuthConfig, authReducer),
+  auth: persistReducer(persistAuthConfig, authSlice),
+  score: scoreSlice,
 });
 
 const store = configureStore({

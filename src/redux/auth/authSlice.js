@@ -23,7 +23,6 @@ const authSlice = createSlice({
         // console.log(payload);
         state.loading = false;
         state.user.name = payload.user.name;
-        state.user.email = payload.user.email;
         state.token = payload.token;
       })
       .addCase(signup.rejected, (state, { payload }) => {
