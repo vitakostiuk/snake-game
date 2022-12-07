@@ -34,12 +34,12 @@ const SignUp = () => {
         <form className={s.ContactForm} onSubmit={handleSubmit}>
           <div className={s.InputWrapper}>
             <label className={s.Label}>
-              Name
+              Enter your name
               <input
                 className={s.Input}
                 value={name}
                 type="text"
-                placeholder="Brad Pitt"
+                // placeholder="Cucumber"
                 required
                 onChange={(e) => setName(e.target.value)}
               />
@@ -47,7 +47,7 @@ const SignUp = () => {
           </div>
 
           <button type="submit" className={s.FormBtn} disabled={isBtnDisabled}>
-            Sign Up
+            Done
           </button>
         </form>
       </div>
