@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import styles from "./App.module.css";
 import Citrus from "./images/citrus_icon.png";
 import Pineapple from "./images/pineapple_icon.png";
@@ -29,6 +30,24 @@ function App() {
   const [score, setScore] = useState(0);
 
   useInterval(() => runGame(), delay);
+
+  // axios.defaults.baseURL = "https://snake-game-backend.onrender.com";
+  axios.defaults.headers.common.Authorization =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTA2YmM0YmJkMDdlZTlhNDQ3MDdiOSIsImlhdCI6MTY3MDQwOTE1NiwiZXhwIjoxNjcwNDk1NTU2fQ.0vobgE1vJIFYUTxR5dZFh_DXXQKStbsSkgkK4ZUEGAc";
+
+  useEffect(() => {
+    const getAllScores = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://snake-game-backend.onrender.com/api/scores"
+        );
+        console.log("data", data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    getAllScores();
+  }, []);
 
   useEffect(() => {
     let fruit = document.getElementById(foodId);
