@@ -23,7 +23,7 @@ const persistAuthConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(persistAuthConfig, authSlice),
-  score: scoreSlice,
+  userScores: scoreSlice,
 });
 
 const store = configureStore({

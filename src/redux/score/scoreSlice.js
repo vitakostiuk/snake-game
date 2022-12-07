@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllScores } from "./scoreOperations";
+import { getAllScores, addScore } from "./scoreOperations";
 
 const initialState = {
-  score: [],
+  userScores: [],
+  currentScore: 0,
+  loading: false,
+  error: null,
 };
 
 const scoreSlice = createSlice({
@@ -11,17 +14,28 @@ const scoreSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // REDUCER FOR SIGN_UP
       .addCase(getAllScores.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getAllScores.fulfilled, (state, { payload }) => {
-        console.log("payload", payload);
         state.loading = false;
-        state.score = payload;
+        state.userScores = payload;
       })
       .addCase(getAllScores.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+
+      .addCase(addScore.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addScore.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.currentScore = payload.score;
+      })
+      .addCase(addScore.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });

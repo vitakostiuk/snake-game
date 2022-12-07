@@ -1,3 +1,3 @@
-const getScore = (state) => state.score;
+const getScore = (state) => state.userScores.userScores;
 
 export { getScore };

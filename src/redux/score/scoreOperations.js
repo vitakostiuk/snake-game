@@ -25,4 +25,25 @@ const getAllScores = createAsyncThunk(
   }
 );
 
-export { getAllScores };
+const addScore = createAsyncThunk(
+  "score/addScore",
+  async (body, { rejectWithValue, getState }) => {
+    const persistedToken = getState().auth.token;
+
+    if (!persistedToken) {
+      return rejectWithValue();
+    }
+
+    axios.defaults.headers.common.Authorization = `Bearer ${persistedToken}`;
+
+    try {
+      const { data } = await axios.post(`api/scores`, body);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export { getAllScores, addScore };

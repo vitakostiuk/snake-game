@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllScores } from "../../redux/score/scoreOperations";
-import { authSelectors } from "../../redux/auth";
+import { getAllScores, addScore } from "../../redux/score/scoreOperations";
+import { scoreSelectors } from "../../redux/score";
 import Citrus from "../../images/citrus_icon.png";
 import Pineapple from "../../images/pineapple_icon.png";
 import Watermelon from "../../images/watermelon_icon.png";
@@ -31,31 +30,32 @@ const SnakeGame = () => {
   const [savedDelay, setSavedDelay] = useState(timeDelay);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
-  // const token = useSelector(authSelectors.getToken);
-  // console.log("token", token);
   const dispatch = useDispatch();
 
   useInterval(() => runGame(), delay);
 
-  // axios.defaults.baseURL = "https://snake-game-backend.onrender.com";
-  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  useEffect(() => {
+    dispatch(getAllScores());
+  }, [dispatch]);
+
+  const scoreFromRedux = useSelector(scoreSelectors.getScore).map(
+    (item) => item.score
+  );
 
   useEffect(() => {
-    const data = dispatch(getAllScores());
-    console.log("data", data);
-    // const getAllScores = async () => {
-    //   try {
-    //     const { data } = await axios.get(
-    //       "https://snake-game-backend.onrender.com/api/scores"
-    //     );
-    //     console.log("data", data);
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // };
-    // getAllScores();
-  }, [dispatch]);
+    for (let i = 0; i < scoreFromRedux.length; i++) {
+      let max = scoreFromRedux[i];
+      if (scoreFromRedux.length === 1) {
+        setHighScore(max);
+      }
+      if (max < scoreFromRedux[i + 1]) {
+        max = scoreFromRedux[i + 1];
+        setHighScore(max);
+      }
+    }
+  }, [scoreFromRedux]);
 
   useEffect(() => {
     let fruit = document.getElementById(foodId);
@@ -101,9 +101,7 @@ const SnakeGame = () => {
 
   // HANDLE SCORE
   function handleSetScore() {
-    if (score > Number(localStorage.getItem("snakeScore"))) {
-      localStorage.setItem("snakeScore", JSON.stringify(score));
-    }
+    dispatch(addScore({ score: Number(score) }));
   }
 
   // PLAY GAME (after click button)
@@ -274,7 +272,7 @@ const SnakeGame = () => {
       </button>
       <div className={styles.scoreBox}>
         <h2>Score: {score}</h2>
-        <h2>High Score: {localStorage.getItem("snakeScore")}</h2>
+        <h2>High Score: {`${score > highScore ? score : highScore}`}</h2>
       </div>
     </div>
   );
