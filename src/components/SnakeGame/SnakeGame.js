@@ -30,12 +30,12 @@ const SnakeGame = () => {
   const [savedDelay, setSavedDelay] = useState(timeDelay);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
 
   const dispatch = useDispatch();
 
   useInterval(() => runGame(), delay);
 
+  // GET USER SCORES
   useEffect(() => {
     dispatch(getAllScores());
   }, [dispatch]);
@@ -43,19 +43,6 @@ const SnakeGame = () => {
   const scoreFromRedux = useSelector(scoreSelectors.getScore).map(
     (item) => item.score
   );
-
-  useEffect(() => {
-    for (let i = 0; i < scoreFromRedux.length; i++) {
-      let max = scoreFromRedux[i];
-      if (scoreFromRedux.length === 1) {
-        setHighScore(max);
-      }
-      if (max < scoreFromRedux[i + 1]) {
-        max = scoreFromRedux[i + 1];
-        setHighScore(max);
-      }
-    }
-  }, [scoreFromRedux]);
 
   useEffect(() => {
     let fruit = document.getElementById(foodId);
@@ -106,7 +93,6 @@ const SnakeGame = () => {
 
   // PLAY GAME (after click button)
   function play() {
-    // setDelay(timeDelay);
     setDelay(savedDelay);
     console.log("savedDelay", savedDelay);
 
@@ -133,6 +119,15 @@ const SnakeGame = () => {
   // PAUSE GAME (after click button)
   function pause() {
     setDelay(null);
+  }
+
+  // GAME OWER CONFIRM (after click OK)
+  function gameOwerConfirm() {
+    setSnake(initialSnake);
+    setFood(initialFood);
+    setDirection([1, 0]);
+    setScore(0);
+    setGameOver(false);
   }
 
   // HANDLE COLLISION or when SNAKE ATE HERSELF
@@ -263,7 +258,18 @@ const SnakeGame = () => {
         width={`${canvasX}px`}
         height={`${canvasY}px`}
       />
-      {gameOver && <div className={styles.gameOver}>Game Over</div>}
+      {gameOver && (
+        <div className={styles.gameOver}>
+          Game Over
+          <button
+            type="button"
+            className={styles.gameOverButton}
+            onClick={gameOwerConfirm}
+          >
+            OK
+          </button>
+        </div>
+      )}
       <button onClick={play} className={styles.playButton}>
         Play
       </button>
@@ -272,7 +278,14 @@ const SnakeGame = () => {
       </button>
       <div className={styles.scoreBox}>
         <h2>Score: {score}</h2>
-        <h2>High Score: {`${score > highScore ? score : highScore}`}</h2>
+        <h2>
+          High Score:{" "}
+          {`${
+            score > Math.max(...scoreFromRedux)
+              ? score
+              : Math.max(...scoreFromRedux)
+          }`}
+        </h2>
       </div>
     </div>
   );
