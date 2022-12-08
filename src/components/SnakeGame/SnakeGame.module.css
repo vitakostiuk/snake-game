@@ -94,11 +94,13 @@
 
 .gameOverButton {
   composes: playButton;
-  position: static;
-  margin-top: 60px;
-  margin-left: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 40px;
   background: #077e2e;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .scoreContainer {
