@@ -10,7 +10,7 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/snake-game/">
+    <BrowserRouter basename="/">
       <PersistGate loading={null} persistor={store.persistor}>
         <Provider store={store.store}>
           <App />
