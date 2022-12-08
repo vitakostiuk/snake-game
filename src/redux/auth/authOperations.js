@@ -17,8 +17,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const signup = createAsyncThunk(
   "auth/signup",
   async (credentials, { rejectWithValue }) => {
-    // const userInfo = { ...credentials };
-
     try {
       const { data } = await axios.post(`api/users/signup`, credentials);
       token.set(data.token);

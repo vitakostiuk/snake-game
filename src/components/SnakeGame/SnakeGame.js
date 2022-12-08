@@ -50,30 +50,18 @@ const SnakeGame = () => {
     let fruit = document.getElementById(foodId);
 
     if (canvasRef.current) {
-      const canvas = canvasRef.current; // {current: canvas.App_playArea__UkgHU}
+      const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       if (ctx) {
-        ctx.setTransform(scale, 0, 0, scale, 0, 0); // CanvasRenderingContext2D.setTransform()
-        // This lets you scale, rotate, translate (move), and skew the context.
-        // setTransform(a, b, c, d, e, f)
-        // a (m11) !!! - Horizontal scaling. A value of 1 results in no scaling.
-        // b (m12) - Vertical skewing.
-        // c (m21) - Horizontal skewing.
-        // d (m22) !!! - Vertical scaling. A value of 1 results in no scaling.
-        // e (dx) - Horizontal translation (moving).
-        // f (dy) - Vertical translation (moving).
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); // CanvasRenderingContext2D.clearRect()
-        // Видаляємо попередню ячєйку, стираємо пікселі, встановлюючи для нихпрозорий колір
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-        ctx.fillStyle = "#a3d001"; // задаємо колір
+        ctx.fillStyle = "#a3d001";
 
-        snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1)); // CanvasRenderingContext2D.fillRect()
-        // Рисует прямоугольник, который заполняется в соответствии с текущим стилем fillStyle.
-        // 1, 1 - це масштаб
+        snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
 
-        // малюємо їжу
-        ctx.drawImage(fruit, food[0], food[1], 1, 1); // 1, 1 - це масштаб
+        ctx.drawImage(fruit, food[0], food[1], 1, 1);
       }
     }
   }, [snake, food, gameOver, foodId]);
@@ -179,13 +167,11 @@ const SnakeGame = () => {
   // RUN GAME
   function runGame() {
     const newSnake = [...snake];
-    // console.log("newSnake", newSnake);
 
     const newSnakeHead = [
       newSnake[0][0] + direction[0],
       newSnake[0][1] + direction[1],
     ];
-    // console.log("newSnakeHead", newSnakeHead);
 
     newSnake.unshift(newSnakeHead);
 
@@ -202,7 +188,6 @@ const SnakeGame = () => {
 
   // HANDLE CHANGE DIRECTION
   function changeDirection(e) {
-    // eslint-disable-next-line default-case
     switch (e.key) {
       case "ArrowLeft":
         setDirection([-1, 0]);
@@ -219,6 +204,9 @@ const SnakeGame = () => {
       case "ArrowDown":
         setDirection([0, 1]);
         localStorage.setItem("direction", "ArrowDown");
+        break;
+
+      default:
         break;
     }
   }
