@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { authSelectors } from "./redux/auth";
 import SnakeGame from "./components/SnakeGame";
 import SignUp from "./components/SignUp";
-import LeaderBoard from "./components/LeaderBoard";
-import Score from "./components/Score";
 
 const App = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+
   return (
     <>
       <Routes>
