@@ -21,22 +21,36 @@ const LeaderBoard = () => {
     };
     getAllUsersScores();
   }, []);
+
+  // const filterArray = (arr) => {
+  //   const temp = [];
+  //   return arr.sort((a,b) => b.score - a.score).filter(i => {
+  //     if (temp.includes(i.name)) {
+  //       return false;
+  //     }
+  //     temp.push(i.name);
+  //     return true;
+  //   });
+  // }
   return (
-    <div className={styles.container}>
+    <div>
+      {" "}
       <h1 className={styles.title}>Leader Board</h1>
-      <div className={styles.textContainer}>
-        <p className={styles.titleText}>Name</p>
-        <p className={styles.titleText}>Score</p>
+      <div className={styles.container}>
+        <div className={styles.textContainer}>
+          <p className={styles.titleText}>Name</p>
+          <p className={styles.titleText}>Score</p>
+        </div>
+        <ul className={styles.list}>
+          {allUsersScores &&
+            allUsersScores.map(({ name, score }) => (
+              <li key={nanoid()} className={styles.textContainer}>
+                <p className={styles.itemName}>{name}:</p>
+                <p className={styles.itemScore}>{score}</p>
+              </li>
+            ))}
+        </ul>
       </div>
-      <ul className={styles.list}>
-        {allUsersScores &&
-          allUsersScores.map(({ name, score }) => (
-            <li key={nanoid()} className={styles.textContainer}>
-              <p className={styles.itemName}>{name}:</p>
-              <p className={styles.itemScore}>{score}</p>
-            </li>
-          ))}
-      </ul>
     </div>
   );
 };
