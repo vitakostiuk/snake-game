@@ -38,8 +38,6 @@
 .itemScore {
   composes: itemName;
   font-size: 25px;
-  /* font-style: 25px;
-  margin: 5px; */
 }
 
 .title {

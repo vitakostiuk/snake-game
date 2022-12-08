@@ -1,37 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import axios from "axios";
+import { filterArray } from "../../helpers/filterArray";
 import styles from "./LeaderBoard.module.css";
 
 const LeaderBoard = () => {
   const [allUsersScores, setAllUsersScores] = useState([]);
+
   useEffect(() => {
     const getAllUsersScores = async () => {
       const { data } = await axios.get(
         "https://snake-game-backend.onrender.com/api/scores/all"
       );
-      setAllUsersScores(
-        data
-          .map(({ name, score }) => ({ name, score }))
-          .sort(
-            (firstGamer, SecondGamer) => SecondGamer.score - firstGamer.score
-          )
-      );
-      console.log("data", data);
+
+      const scoreArray = data.map(({ name, score }) => ({ name, score }));
+      setAllUsersScores(filterArray(scoreArray));
     };
     getAllUsersScores();
   }, []);
 
-  // const filterArray = (arr) => {
-  //   const temp = [];
-  //   return arr.sort((a,b) => b.score - a.score).filter(i => {
-  //     if (temp.includes(i.name)) {
-  //       return false;
-  //     }
-  //     temp.push(i.name);
-  //     return true;
-  //   });
-  // }
   return (
     <div>
       {" "}

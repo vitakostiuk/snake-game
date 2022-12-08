@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authOperations, authSelectors } from "../../redux/auth";
-
-import s from "./SignUp.module.css";
+import styles from "./SignUp.module.css";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -31,12 +30,13 @@ const SignUp = () => {
   return (
     <>
       <div>
-        <form className={s.ContactForm} onSubmit={handleSubmit}>
-          <div className={s.InputWrapper}>
-            <label className={s.Label}>
+        <h1 className={styles.title}>Welcome to the Snake Game</h1>
+        <form className={styles.contactForm} onSubmit={handleSubmit}>
+          <div className={styles.inputWrapper}>
+            <label className={styles.label}>
               Enter your name
               <input
-                className={s.Input}
+                className={styles.input}
                 value={name}
                 type="text"
                 // placeholder="Cucumber"
@@ -46,7 +46,11 @@ const SignUp = () => {
             </label>
           </div>
 
-          <button type="submit" className={s.FormBtn} disabled={isBtnDisabled}>
+          <button
+            type="submit"
+            className={styles.formBtn}
+            disabled={isBtnDisabled}
+          >
             Done
           </button>
         </form>
